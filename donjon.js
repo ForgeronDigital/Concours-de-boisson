@@ -17,12 +17,14 @@ document.getElementById('degat').innerHTML+=nain.degat;
 document.getElementById('boutonBoire').addEventListener('click',function boire() {
     
     if(nain.alcool>=1.5){
-        if(nain.santé>10){nain.santé-=10;
+        if(nain.santé>10){
+            nain.santé-=10;
             document.getElementById('sante').innerHTML="Santé: "+ nain.santé;
             nain.alcool+=0.25;
-        document.getElementById('alcool').innerHTML="Gramme par litre: " + nain.alcool;}
+            document.getElementById('alcool').innerHTML="Gramme par litre: " + nain.alcool;}
         else {
             document.getElementById('sante').innerHTML="Santé: 0 </br>Vous êtes mort... Ivrogne !"
+            alert("Vous êtes mort... Ivrogne !");
         }
     }
     else{nain.alcool+=0.25;
@@ -30,15 +32,31 @@ document.getElementById('boutonBoire').addEventListener('click',function boire()
 });
 
 document.getElementById('boutonVomir').addEventListener('click', function vomir(){
-    if(nain.alcool>0.5){
-        nain.alcool-=0.5;
-        document.getElementById('alcool').innerHTML="Gramme par litre: "+ nain.alcool;
+    if(nain.santé>10){
+        if(nain.alcool>0.5){
+            nain.alcool-=0.5;
+            document.getElementById('alcool').innerHTML="Gramme par litre: "+ nain.alcool;
+        }
+        else{nain.alcool=0;
+            document.getElementById('alcool').innerHTML="Gramme par litre: 0"
+        }  
     }
-    else{nain.alcool=0;
-        document.getElementById('alcool').innerHTML="Gramme par litre: 0"
-    }  
+    else {
+        alert("Vous êtes mort... Ivrogne !");
+    }
 });
 
 document.getElementById('boutonManger').addEventListener('click', function manger(){
-    
-})
+    if(nain.santé>10){
+        if(nain.santé<80){
+        nain.santé+=20;
+        document.getElementById('sante').innerHTML="Santé: "+nain.santé;}
+        else{
+            nain.santé=100;
+            document.getElementById('sante').innerHTML="Santé: "+nain.santé;}
+    }
+    else {
+        alert("Vous êtes mort... Ivrogne !");
+    }
+
+});
