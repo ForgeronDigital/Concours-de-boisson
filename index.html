@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Le donjon qui sent bon !</title>
+</head>
+<body>
+    <div class="container">
+       <div class="jeu"> 
+            <div class="jeu__dialogue"></div>
+            <div class="jeu__action">
+                <button class="jeu__action__bouton" id="boutonBoire">Boire</button>
+                <button class="jeu__action__bouton" id="boutonVomir">Vomir</button>
+                <button class="jeu__action__bouton" id="boutonManger">Manger</button>
+            </div>
+        </div>
+        <div class="personnage">
+            <div class="personnage__image">
+                <img src="image/nain.jpg" alt="" class="personnage__image__image">
+            </div>
+            <div class="personnage__info">
+                <div class="personnage__info--size">
+                    <p id="nom">Nom: </p>
+                </div>
+                <div class="personnage__info--size">
+                    <p id="sante">Santé: </p>
+                    <img src="image/coeur.jpg" alt="" class="personnage__info__image">
+                </div>
+                <div class="personnage__info--size">
+                    <p id="alcool">Gramme par litre: </p>
+                    <img src="image/biere.svg" alt="" class="personnage__info__image">
+                </div>
+                <div class="personnage__info--size">
+                    <p id="degat">Force de frappe: </p>
+                    <img src="image/force.jpg" alt="" class="personnage__info__image">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="donjon.js"></script>
+</html>
