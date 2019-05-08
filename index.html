@@ -10,11 +10,37 @@
 <body>
     <div class="container">
        <div class="jeu"> 
-            <div class="jeu__dialogue"></div>
+            <div class="jeu__dialogue">
+                <div class="jeu__dialogue__image" >
+                    <img src="" alt="" class="jeu__dialogue__image--size" id="imageEnnemie">
+                </div>
+                <div class="jeu__dialogue__etat">
+                    <div class="jeu__dialogue__etat__class">
+                        <form action="">
+                            <label for="choixClass">Choix de votre adversaire:</label>
+                            <select name="choixClass" id="choixClass" onchange="reload()">
+                                <option value="humain">Humain</option id="choix">
+                                <option value="elf">Efl</option>
+                                <option value="orc">Orc</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="jeu__dialogue__etat__info">
+                        <p id="nomEnnemie">Nom: </p>
+                    </div>
+                    <div class="jeu__dialogue__etat__info">
+                        <p id="santeEnnemie">Santé: </p>
+                        <img src="image/coeur.jpg" alt="" class="personnage__info__image">
+                    </div>
+                </div>
+            </div>
             <div class="jeu__action">
                 <button class="jeu__action__bouton" id="boutonBoire">Boire</button>
                 <button class="jeu__action__bouton" id="boutonVomir">Vomir</button>
                 <button class="jeu__action__bouton" id="boutonManger">Manger</button>
+                <button class="jeu__action__bouton" id="boutonFrapper">Frapper</button>
+                <div><p class="jeu__action__regles">Les règles sont simple: </p> 
+                <p class="jeu__action__regles">Défaire l'ennemie sans mourrir, boire vous donnera de la force mais attention, l'abus d'alcool est dangereux pour la santé... Vomir pourrait vous faire vous sentir mieux...</p></div>
             </div>
         </div>
         <div class="personnage">
@@ -33,7 +59,7 @@
                     <p id="alcool">Gramme par litre: </p>
                     <img src="image/biere.svg" alt="" class="personnage__info__image">
                 </div>
-                <div class="personnage__info--size">
+                <div class="personnage__info--sizes">
                     <p id="degat">Force de frappe: </p>
                     <img src="image/force.jpg" alt="" class="personnage__info__image">
                 </div>
