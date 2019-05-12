@@ -1,21 +1,97 @@
 class Personnage{
     constructor (nom,santé,alcool,degat){
         this.nom= nom;
-        this.santé=100;
-        this.alcool=0;
-        this.degat=5;
-    }
-}
-
-class Ennemie{
-    constructor (nom,santé,degat){
-        this.nom= nom;
         this.santé=santé;
+        this.alcool=alcool;
         this.degat=degat;
     }
 }
+function vibrer(){
+    var contenu=document.getElementById('container');
+    var pos =1000;
+    var pos2 =5;
+    var id = setInterval(buzz,50);
+    contenu.style.left='calc(50vw - 30vw + 5px)';
+    function buzz(){
+        if((pos>0)&&(pos2>0)){
+            contenu.style.left='calc(50vw - 30vw - 10px)';
+            pos-=100;
+            pos2-=10;
+        }
+        else if((pos>0)&&(pos2<0)){
+            contenu.style.left='calc(50vw - 30vw + 10px)';
+            pos-=100;
+            pos2+=10;
+        }
+        else if (pos<=0){
+            clearInterval(id);
+        }
+    }
+}
+function attaquer(ennemie,perso)
+{
+    document.getElementById('sante').innerHTML="Santé: "+perso.santé;
+    if(ennemie.santé>perso.degat){
+    ennemie.santé-=perso.degat;
+    document.getElementById('santeEnnemie').innerHTML='Santé: '+ennemie.santé;
+    }
+    else if(ennemie.santé<=perso.degat){
+        ennemie.santé=0;
+        document.getElementById('santeEnnemie').innerHTML="Santé: 0";
+        if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="humain"){document.getElementById('imageEnnemie').setAttribute('src','image/alcooliqueVictoire.jpg');}
+        else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="elf"){document.getElementById('imageEnnemie').setAttribute('src','image/elf.jpg');}
 
-const nain = new Personnage("Arldof");
+        else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="orc"){document.getElementById('imageEnnemie').setAttribute('src','image/orc.jpg');}
+        
+        alert("Vous avez gagné ce duel de poivrot, bravo ! Changez d'adversaire maintenant");
+        choixEnnemie.disabled=false;
+        document.location.reload();
+    }
+}
+function attaquer2(ennemie,perso)
+{
+    document.getElementById('santeEnnemie').innerHTML="Santé: "+perso.santé;
+    if(ennemie.santé>perso.degat){
+    ennemie.santé-=perso.degat;
+    document.getElementById('sante').innerHTML='Santé: '+ennemie.santé;
+    }
+    else if(ennemie.santé<=perso.degat){
+        ennemie.santé=0;
+        document.getElementById('sante').innerHTML="Santé: 0";
+        alert("Vous vous êtes fait défoncer...noob!");
+        choixEnnemie.disabled=false;
+        document.location.reload();
+    }
+}
+function rendreCoup(ennemie,perso){
+    var chance = Math.random()*100;
+    var vie;
+    if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="humain"){vie = 100;}
+    else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="elf"){vie = 130;}
+    else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="orc"){vie = 200;}
+    
+    if((perso.santé<=vie)&&(chance<=10)){
+        attaquer2(ennemie,perso);}
+    else if((perso.santé<=vie*0.8)&&(chance<=40)){
+        attaquer2(ennemie,perso);
+    }
+    else if((perso.santé<=vie*0.6)&&(chance<=60)){
+        attaquer2(ennemie,perso);
+    }
+    else if((perso.santé<=vie*0.5)&&(chance<=70)){
+        attaquer2(ennemie,perso);
+    }
+    else if((perso.santé<=vie*0.4)&&(chance<=80)){
+        attaquer2(ennemie,perso);
+    }
+    else if((perso.santé<=vie*0.3)&&(chance<=90)){
+        attaquer2(ennemie,perso);
+    }
+    else if((perso.santé<=vie*0.2)&&(chance<=100)){
+        attaquer2(ennemie,perso);
+    }
+}
+var nain = new Personnage("Arldof",100,0,5);
 
 document.getElementById('nom').innerHTML+=nain.nom;
 document.getElementById('sante').innerHTML+=nain.santé;
@@ -74,10 +150,6 @@ document.getElementById('boutonManger').addEventListener('click', function mange
     }
 });
 
-var humain;
-var elf;
-var orc;
-
  var choixEnnemie = document.getElementById('choixClass');
  function reload (){
     document.location.reload(false);
@@ -85,120 +157,39 @@ var orc;
 choixEnnemie.addEventListener('change', function(){
     if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="humain"){
         choixEnnemie.disabled=true;
-        humain = new Ennemie("Robert",100,5);
+        var humain = new Personnage("Robert",100,0,5);
         document.getElementById('nomEnnemie').innerHTML="Nom: "+ humain.nom;
-        document.getElementById('santeEnnemie').innerHTML="Santé: "+humain.santé;
+        document.getElementById('santeEnnemie').innerHTML="Santé: "+ humain.santé;
         document.getElementById('imageEnnemie').setAttribute('src','image/humain.jpg');
-        document.getElementById('boutonFrapper').addEventListener('click', function(){
-                if(humain.santé>nain.degat){
-                    humain.santé-=nain.degat;
-                    document.getElementById('santeEnnemie').innerHTML='Santé: '+humain.santé;
-                }
-                else if(humain.santé<=nain.degat){
-                    humain.santé=0;
-                    document.getElementById('santeEnnemie').innerHTML="Santé: 0";
-                    document.getElementById('imageEnnemie').setAttribute('src','image/alcooliqueVictoire.jpg');
-                    alert("Vous avez gagné ce duel de poivrot, bravo ! Changez d'adversaire maintenant");
-                    choixEnnemie.disabled=false;
-                    document.location.reload();}
-     });}
+        document.getElementById('boutonFrapper').addEventListener('click', function(){attaquer(humain,nain);vibrer();rendreCoup(nain,humain);});
+        document.getElementById('boutonBoire').addEventListener('click', function(){rendreCoup(nain,humain);});
+        document.getElementById('boutonVomir').addEventListener('click', function(){rendreCoup(nain,humain);});
+        document.getElementById('boutonManger').addEventListener('click', function(){rendreCoup(nain,humain);});
+    }
     else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="elf"){
         choixEnnemie.disabled=true;
-        elf = new Ennemie("Dégolasse",130,8);
+        var elf = new Personnage("Dégolasse",130,0,8);
         document.getElementById('nomEnnemie').innerHTML="Nom: "+ elf.nom;
         document.getElementById('santeEnnemie').innerHTML="Santé: "+elf.santé;
         document.getElementById('imageEnnemie').setAttribute('src','image/elfNeuf.jpg');
-        document.getElementById('boutonFrapper').addEventListener('click', function(){
-            if(elf.santé>nain.degat){
-            elf.santé-=nain.degat;
-            document.getElementById('santeEnnemie').innerHTML='Santé: '+elf.santé;
-            }
-            else if(elf.santé<=nain.degat){
-                elf.santé=0;
-                document.getElementById('santeEnnemie').innerHTML="Santé: 0";
-                document.getElementById('imageEnnemie').setAttribute('src','image/elf.jpg');
-                alert("Vous avez gagné ce duel de poivrot, bravo ! Changez d'adversaire maintenant");
-                choixEnnemie.disabled=false;
-                document.location.reload();
-            }
+        document.getElementById('boutonFrapper').addEventListener('click', function(){attaquer(elf,nain);vibrer();rendreCoup(nain,elf);});
+        document.getElementById('boutonBoire').addEventListener('click', function(){rendreCoup(nain,elf);});
+        document.getElementById('boutonVomir').addEventListener('click', function(){rendreCoup(nain,elf);});
+        document.getElementById('boutonManger').addEventListener('click', function(){rendreCoup(nain,elf);});
     }
-    );}
+
     else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="orc"){
         choixEnnemie.disabled=true;
-        orc = new Ennemie("Vormac",200,15);
+        var orc = new Personnage("Vormac",200,0,15);
         document.getElementById('nomEnnemie').innerHTML="Nom: "+ orc.nom;
         document.getElementById('santeEnnemie').innerHTML="Santé: "+orc.santé;
         document.getElementById('imageEnnemie').setAttribute('src','image/orcNeuf.jpg');
-        document.getElementById('boutonFrapper').addEventListener('click', function(){
-            if(orc.santé>nain.degat){
-            orc.santé-=nain.degat;
-            document.getElementById('santeEnnemie').innerHTML='Santé: '+orc.santé;
-            }
-            else if(orc.santé<=nain.degat){
-                orc.santé=0;
-                document.getElementById('santeEnnemie').innerHTML="Santé: 0";
-                document.getElementById('imageEnnemie').setAttribute('src','image/orc.jpg');
-                alert("Vous avez gagné ce duel de poivrot, bravo ! Changez d'adversaire maintenant");
-                choixEnnemie.disabled=false;
-                document.location.reload();
-            }
+        document.getElementById('boutonFrapper').addEventListener('click', function(){attaquer(orc,nain);vibrer();rendreCoup(nain,orc);});
+        document.getElementById('boutonBoire').addEventListener('click', function(){rendreCoup(nain,orc);});
+        document.getElementById('boutonVomir').addEventListener('click', function(){rendreCoup(nain,orc);});
+        document.getElementById('boutonManger').addEventListener('click', function(){rendreCoup(nain,orc);});
     }
-    );}
 });
-// if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="humain"){
-    
-//     humain = new Ennemie("Robert",100,5);
-//     document.getElementById('nomEnnemie').innerHTML+= humain.nom;
-//     document.getElementById('santeEnnemie').innerHTML+=humain.santé;
-//     document.getElementById('imageEnnemie').setAttribute('src','image/humain.jpg');
-//     document.getElementById('boutonFrapper').addEventListener('click', function(){
-//             if(humain.santé>nain.degat){
-//                 humain.santé-=nain.degat;
-//                 document.getElementById('santeEnnemie').innerHTML='Santé: '+humain.santé;
-//             }
-//             else if(humain.santé<=nain.degat){
-//                 humain.santé=0;
-//                 document.getElementById('santeEnnemie').innerHTML="Santé: 0";
-//                 document.getElementById('imageEnnemie').setAttribute('src','image/alcooliqueVictoire.jpg');
-//                 alert("Vous avez gagné ce duel de poivrot, bravo ! Changez d'adversaire maintenant");}
-//  });}
-// else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="elf"){
-//     elf = new Ennemie("Dégolasse",130,8);
-//     document.getElementById('nomEnnemie').innerHTML+= elf.nom;
-//     document.getElementById('santeEnnemie').innerHTML+=elf.santé;
-//     document.getElementById('imageEnnemie').setAttribute('src','image/elfNeuf.jpg');
-//     document.getElementById('boutonFrapper').addEventListener('click', function(){
-//         if(elf.santé>nain.degat){
-//         elf.santé-=nain.degat;
-//         document.getElementById('santeEnnemie').innerHTML='Santé: '+elf.santé;
-//         }
-//         else if(elf.santé<=nain.degat){
-//             elf.santé=0;
-//             document.getElementById('santeEnnemie').innerHTML="Santé: 0";
-//             document.getElementById('imageEnnemie').setAttribute('src','image/elf.jpg');
-//             alert("Vous avez gagné ce duel de poivrot, bravo ! Changez d'adversaire maintenant");
-//         }
-// }
-// );}
-// else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="orc"){
-//     orc = new Ennemie("Vormac",200,15);
-//     document.getElementById('nomEnnemie').innerHTML+= orc.nom;
-//     document.getElementById('santeEnnemie').innerHTML+=orc.santé;
-//     document.getElementById('imageEnnemie').setAttribute('src','image/orcNeuf.jpg');
-//     document.getElementById('boutonFrapper').addEventListener('click', function(){
-//         if(orc.santé>nain.degat){
-//         orc.santé-=nain.degat;
-//         document.getElementById('santeEnnemie').innerHTML='Santé: '+orc.santé;
-//         }
-//         else if(orc.santé<=nain.degat){
-//             orc.santé=0;
-//             document.getElementById('santeEnnemie').innerHTML="Santé: 0";
-//             document.getElementById('imageEnnemie').setAttribute('src','image/orc.jpg');
-//             alert("Vous avez gagné ce duel de poivrot, bravo ! Changez d'adversaire maintenant");
-//         }
-// }
-// );}
 
-
- console.log(choixEnnemie.options[choixEnnemie.options.selectedIndex].value)
+console.log(choixEnnemie.options[choixEnnemie.options.selectedIndex].value);
 
