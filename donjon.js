@@ -6,6 +6,19 @@ class Personnage{
         this.degat=degat;
     }
 }
+function attendre() {
+    var bouton1= document.getElementsByClassName("jeu__action__bouton");
+    for (i=0;i<bouton1.length;i++)
+    {bouton1[i].disabled=false;}
+            }
+function bandeSon(mp3){
+    var audio =new Audio('mp3/'+mp3)
+    var bouton= document.getElementsByClassName("jeu__action__bouton");
+    audio.play();
+    for (i=0;i<bouton.length;i++){
+        bouton[i].disabled=true;
+    }
+}
 function vibrer(){
     var contenu=document.getElementById('container');
     var pos =1000;
@@ -28,8 +41,31 @@ function vibrer(){
         }
     }
 }
+function trembler(){
+    var contenu=document.getElementById('container');
+    var pos =1000;
+    var pos2 =5;
+    var id = setInterval(buzz,50);
+    contenu.style.top='calc(50vh - 30vh + 5px)';
+    function buzz(){
+        if((pos>0)&&(pos2>0)){
+            contenu.style.top='calc(50vh - 30vh - 10px)';
+            pos-=100;
+            pos2-=10;
+        }
+        else if((pos>0)&&(pos2<0)){
+            contenu.style.top='calc(50vh - 30vh + 10px)';
+            pos-=100;
+            pos2+=10;
+        }
+        else if (pos<=0){
+            clearInterval(id);
+        }
+    }
+}
 function attaquer(ennemie,perso)
-{
+{   bandeSon('perso.wav');
+    setTimeout(attendre,3000);
     document.getElementById('sante').innerHTML="Santé: "+perso.santé;
     if(ennemie.santé>perso.degat){
     ennemie.santé-=perso.degat;
@@ -49,7 +85,8 @@ function attaquer(ennemie,perso)
     }
 }
 function attaquer2(ennemie,perso)
-{
+{   bandeSon('ennemie.mp3');
+    setTimeout(attendre,1000);
     document.getElementById('santeEnnemie').innerHTML="Santé: "+perso.santé;
     if(ennemie.santé>perso.degat){
     ennemie.santé-=perso.degat;
@@ -71,24 +108,33 @@ function rendreCoup(ennemie,perso){
     else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="orc"){vie = 200;}
     
     if((perso.santé<=vie)&&(chance<=10)){
-        attaquer2(ennemie,perso);}
+       setTimeout(function(){attaquer2(ennemie,perso);},2000);
+        setTimeout(trembler,2000);
+    }
+        
     else if((perso.santé<=vie*0.8)&&(chance<=40)){
-        attaquer2(ennemie,perso);
+       setTimeout(function(){attaquer2(ennemie,perso);},2000);
+        setTimeout(trembler,2000);
     }
     else if((perso.santé<=vie*0.6)&&(chance<=60)){
-        attaquer2(ennemie,perso);
+       setTimeout(function(){attaquer2(ennemie,perso);},2000);
+        setTimeout(trembler,2000);
     }
     else if((perso.santé<=vie*0.5)&&(chance<=70)){
-        attaquer2(ennemie,perso);
+       setTimeout(function(){attaquer2(ennemie,perso);},2000);
+        setTimeout(trembler,2000);
     }
     else if((perso.santé<=vie*0.4)&&(chance<=80)){
-        attaquer2(ennemie,perso);
+       setTimeout(function(){attaquer2(ennemie,perso);},2000);
+        setTimeout(trembler,2000);
     }
     else if((perso.santé<=vie*0.3)&&(chance<=90)){
-        attaquer2(ennemie,perso);
+       setTimeout(function(){attaquer2(ennemie,perso);},2000);
+        setTimeout(trembler,2000);
     }
     else if((perso.santé<=vie*0.2)&&(chance<=100)){
-        attaquer2(ennemie,perso);
+       setTimeout(function(){attaquer2(ennemie,perso);},2000);
+        setTimeout(trembler,2000);
     }
 }
 var nain = new Personnage("Arldof",100,0,5);
@@ -99,7 +145,8 @@ document.getElementById('alcool').innerHTML+=nain.alcool;
 document.getElementById('degat').innerHTML+=nain.degat;
 
 document.getElementById('boutonBoire').addEventListener('click',function boire() {
-    
+    bandeSon('boire.mp3');
+    setTimeout(attendre,5000);
     if(nain.alcool>=1.5){
         if(nain.santé>10){
             nain.santé-=10;
@@ -120,6 +167,8 @@ document.getElementById('boutonBoire').addEventListener('click',function boire()
 });
 
 document.getElementById('boutonVomir').addEventListener('click', function vomir(){
+    bandeSon('vomi.mp3');
+    setTimeout(attendre,3000);
     if(nain.santé>10){
         if(nain.alcool>0.5){
             nain.alcool-=0.5;
@@ -136,6 +185,8 @@ document.getElementById('boutonVomir').addEventListener('click', function vomir(
 });
 
 document.getElementById('boutonManger').addEventListener('click', function manger(){
+    bandeSon('chips.mp3');
+    setTimeout(attendre,6000);
     if(nain.santé>10){
         if(nain.santé<80){
         nain.santé+=20;
