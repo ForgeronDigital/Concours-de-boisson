@@ -21,10 +21,12 @@ function bandeSon(mp3){
 }
 function vibrer(){
     var contenu=document.getElementById('container');
-    var pos =1000;
-    var pos2 =5;
-    var id = setInterval(buzz,50);
-    contenu.style.left='calc(50vw - 30vw + 5px)';
+    
+    if((window.getComputedStyle(contenu).left)!='0px'){
+        var pos =1000;
+        var pos2 =5;
+        var id = setInterval(buzz,50);
+        contenu.style.left='calc(50vw - 30vw + 5px)';
     function buzz(){
         if((pos>0)&&(pos2>0)){
             contenu.style.left='calc(50vw - 30vw - 10px)';
@@ -40,13 +42,38 @@ function vibrer(){
             clearInterval(id);
         }
     }
+    }else{
+        var pos =1000;
+        var pos2 =5;
+        var id = setInterval(buzz,50);
+        contenu.style.left='5px';
+        function buzz(){
+            if((pos>0)&&(pos2>0)){
+                contenu.style.left='-5px';
+                pos-=100;
+                pos2-=10;
+            }
+            else if((pos>0)&&(pos2<0)){
+                contenu.style.left='5px';
+                pos-=100;
+                pos2+=10;
+            }
+            else if (pos<=0){
+                contenu.style.left='0px';
+                clearInterval(id);
+                
+            }
+        }
+    }
 }
 function trembler(){
     var contenu=document.getElementById('container');
-    var pos =1000;
-    var pos2 =5;
-    var id = setInterval(buzz,50);
-    contenu.style.top='calc(50vh - 30vh + 5px)';
+    
+    if((window.getComputedStyle(document.getElementById('container')).top)!='0px'){
+        var pos =1000;
+        var pos2 =5;
+        var id = setInterval(buzz,50);
+        contenu.style.top='calc(50vh - 30vh + 5px)';
     function buzz(){
         if((pos>0)&&(pos2>0)){
             contenu.style.top='calc(50vh - 30vh - 10px)';
@@ -60,6 +87,29 @@ function trembler(){
         }
         else if (pos<=0){
             clearInterval(id);
+        }
+    }
+    }else{
+        var pos =1000;
+        var pos2 =5;
+        var id = setInterval(buzz,50);
+        contenu.style.top='5px';
+        function buzz(){
+            if((pos>0)&&(pos2>0)){
+                contenu.style.top='-5px';
+                pos-=100;
+                pos2-=10;
+            }
+            else if((pos>0)&&(pos2<0)){
+                contenu.style.top='5px';
+                pos-=100;
+                pos2+=10;
+            }
+            else if (pos<=0){
+                contenu.style.top='0px';
+                clearInterval(id);
+                
+            }
         }
     }
 }
@@ -242,5 +292,5 @@ choixEnnemie.addEventListener('change', function(){
     }
 });
 
-console.log(choixEnnemie.options[choixEnnemie.options.selectedIndex].value);
+console.log(window.getComputedStyle(document.getElementById('container')).top);
 

@@ -1,18 +1,66 @@
-body{
-    background-image: url(image/taverne.jpg);
-    background-repeat: repeat-y;
-    background-size: cover;
+@media screen and (max-width:360px),(max-height:740px){
+    .container{
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+        margin: none;
+    }
 }
-.container{
-    width: 60vw;
-    height: 60vh;
-    position: fixed;
-    top: calc(50vh - 30vh);
-    left: calc(50vw - 30vw);
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid black;
+@media screen and (min-width:361px),(min-height:741px){
+    body{
+        background-image: url(image/taverne.jpg);
+        background-repeat: repeat-y;
+        background-size: cover;
+    }
+    .container{
+        width: 60vw;
+        height: 60vh;
+        position: fixed;
+        top:calc(50vh - 30vh);
+        left:calc(50vw - 30vw);
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+    }
+}
+@media screen and (max-width:650px){
+    .personnage__image{
+        display: none;
+    }
+    .personnage__info{
+        width: 100%;
+    }
+}
+@media screen and (min-width:650px){
+    .personnage__info{
+        width: calc(100% - calc(60vh * 0.3) );
+    }
+}
+@media screen and (max-width:700px),(max-height:500px){
+    .personnage__info__image{
+        display: none;
+    }
+}
+@media screen and (max-width:700px),(max-height:750px){
+    .personnage__info__image__ennemi{
+        display: none;
+    }
+}
+
+@media screen and (max-width:1200px),(max-height:900px){
+    .jeu__action__regles{
+        display: none;
+    }
+    .jeu__action__bouton{
+        height: 25%;
+     }
 }
 .container:hover{
     box-shadow: 0px 0px 10px white;
@@ -59,7 +107,8 @@ body{
     flex-direction: column;
     align-items: center;
 }
-.jeu__action__regles{
+
+.jeu__action__regles__texte{
     padding: 10px;
     font-size: 1.3rem;
 }
@@ -82,7 +131,7 @@ body{
     height: 99%;
 }
 .personnage__info{
-    width: calc(100% - calc(60vh * 0.3) );
+    
     height: 100%;
     display: flex;
     justify-content: space-between;
@@ -98,7 +147,7 @@ body{
     height: 100%;
     padding:0 5px;
 }
-.personnage__info__image{
+.personnage__info__image, .personnage__info__image__ennemi{
     height: 40%;
     width: auto;
 }
