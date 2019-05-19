@@ -126,8 +126,8 @@ function attaquer(ennemie,perso)
         document.getElementById('santeEnnemie').innerHTML="Santé: 0";
         if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="humain"){document.getElementById('imageEnnemie').setAttribute('src','image/alcooliqueVictoire.jpg');}
         else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="elf"){document.getElementById('imageEnnemie').setAttribute('src','image/elf.jpg');}
-
         else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="orc"){document.getElementById('imageEnnemie').setAttribute('src','image/orc.jpg');}
+        else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="demon"){document.getElementById('imageEnnemie').setAttribute('src','image/demonBourre.jpg');}
         
         alert("Vous avez gagné ce duel de poivrot, bravo ! Changez d'adversaire maintenant");
         choixEnnemie.disabled=false;
@@ -137,6 +137,12 @@ function attaquer(ennemie,perso)
 function attaquer2(ennemie,perso)
 {   bandeSon('ennemie.mp3');
     setTimeout(attendre,1000);
+    if(ennemie.santé>66){
+        document.getElementById('im2').style.display="none";
+    }
+    else if(ennemie.santé>33){
+        document.getElementById('im3').style.display="none";
+    }
     document.getElementById('santeEnnemie').innerHTML="Santé: "+perso.santé;
     if(ennemie.santé>perso.degat){
     ennemie.santé-=perso.degat;
@@ -144,6 +150,7 @@ function attaquer2(ennemie,perso)
     }
     else if(ennemie.santé<=perso.degat){
         ennemie.santé=0;
+        document.getElementById('im1').style.display="none";
         document.getElementById('sante').innerHTML="Santé: 0";
         alert("Vous vous êtes fait défoncer...noob!");
         choixEnnemie.disabled=false;
@@ -156,6 +163,7 @@ function rendreCoup(ennemie,perso){
     if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="humain"){vie = 100;}
     else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="elf"){vie = 130;}
     else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="orc"){vie = 200;}
+    else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="demon"){vie = 300;}
     
     if((perso.santé<=vie)&&(chance<=10)){
        setTimeout(function(){attaquer2(ennemie,perso);},2000);
@@ -189,6 +197,15 @@ function rendreCoup(ennemie,perso){
 }
 var nain = new Personnage("Arldof",100,0,5);
 
+document.getElementById('im4').style.display="none";
+document.getElementById('im5').style.display="none";
+document.getElementById('im6').style.display="none";
+
+document.getElementById('im7').style.display="none";
+document.getElementById('im8').style.display="none";
+document.getElementById('im9').style.display="none";
+
+
 document.getElementById('nom').innerHTML+=nain.nom;
 document.getElementById('sante').innerHTML+=nain.santé;
 document.getElementById('alcool').innerHTML+=nain.alcool;
@@ -197,12 +214,27 @@ document.getElementById('degat').innerHTML+=nain.degat;
 document.getElementById('boutonBoire').addEventListener('click',function boire() {
     bandeSon('boire.mp3');
     setTimeout(attendre,5000);
+    if (nain.degat<15){
+        document.getElementById('im7').style.display="initial";
+    }
+    else if (nain.degat<25){
+        document.getElementById('im8').style.display="initial";
+    }
+    else if (nain.degat<35){
+        document.getElementById('im9').style.display="initial";
+    }
+    if(nain.santé<66){
+        document.getElementById('im2').style.display="none";
+    }
+    else if(nain.santé<33){
+        document.getElementById('im3').style.display="none";
+    }
     if(nain.alcool>=1.5){
         if(nain.santé>10){
             nain.santé-=10;
             document.getElementById('sante').innerHTML="Santé: "+ nain.santé;
             nain.alcool+=0.25;
-            document.getElementById('alcool').innerHTML="Gramme par litre: " + nain.alcool;
+            document.getElementById('alcool').innerHTML="Gramme par litre: " + nain.alcool;    
             }
         else {
             document.getElementById('sante').innerHTML="Santé: 0 </br>Vous êtes mort... Ivrogne !"
@@ -213,12 +245,30 @@ document.getElementById('boutonBoire').addEventListener('click',function boire()
     else{nain.alcool+=0.25;
         document.getElementById('alcool').innerHTML="Gramme par litre: " + nain.alcool;
         nain.degat+=5;
-        document.getElementById('degat').innerHTML="Force de frappe: "+nain.degat;}
-});
+        document.getElementById('degat').innerHTML="Force de frappe: "+nain.degat;
+        if (nain.alcool<0.75){
+            document.getElementById('im4').style.display="initial";
+        }
+        else if (nain.alcool<1.25){
+            document.getElementById('im5').style.display="initial";
+        }
+        else if (nain.alcool<1.75){
+            document.getElementById('im6').style.display="initial";
+        }
+    }});
 
 document.getElementById('boutonVomir').addEventListener('click', function vomir(){
     bandeSon('vomi.mp3');
     setTimeout(attendre,3000);
+    if (nain.alcool<0.75){
+        document.getElementById('im4').style.display="none";
+    }
+    else if (nain.alcool<1.25){
+        document.getElementById('im5').style.display="none";
+    }
+    else if (nain.alcool<1.75){
+        document.getElementById('im6').style.display="none";
+    }
     if(nain.santé>10){
         if(nain.alcool>0.5){
             nain.alcool-=0.5;
@@ -237,6 +287,12 @@ document.getElementById('boutonVomir').addEventListener('click', function vomir(
 document.getElementById('boutonManger').addEventListener('click', function manger(){
     bandeSon('chips.mp3');
     setTimeout(attendre,6000);
+    if(nain.santé>66){
+        document.getElementById('im2').style.display="initial";
+    }
+    else if(nain.santé>33){
+        document.getElementById('im3').style.display="initial";
+    }
     if(nain.santé>10){
         if(nain.santé<80){
         nain.santé+=20;
@@ -251,8 +307,9 @@ document.getElementById('boutonManger').addEventListener('click', function mange
     }
 });
 
- var choixEnnemie = document.getElementById('choixClass');
- function reload (){
+
+var choixEnnemie = document.getElementById('choixClass');
+function reload (){
     document.location.reload(false);
 }
 choixEnnemie.addEventListener('change', function(){
@@ -289,6 +346,17 @@ choixEnnemie.addEventListener('change', function(){
         document.getElementById('boutonBoire').addEventListener('click', function(){rendreCoup(nain,orc);});
         document.getElementById('boutonVomir').addEventListener('click', function(){rendreCoup(nain,orc);});
         document.getElementById('boutonManger').addEventListener('click', function(){rendreCoup(nain,orc);});
+    }
+    else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="demon"){
+        choixEnnemie.disabled=true;
+        var demon = new Personnage("Fornax",300,0,20);
+        document.getElementById('nomEnnemie').innerHTML="Nom: "+ demon.nom;
+        document.getElementById('santeEnnemie').innerHTML="Santé: "+demon.santé;
+        document.getElementById('imageEnnemie').setAttribute('src','image/demon.jpg');
+        document.getElementById('boutonFrapper').addEventListener('click', function(){attaquer(demon,nain);vibrer();rendreCoup(nain,demon);});
+        document.getElementById('boutonBoire').addEventListener('click', function(){rendreCoup(nain,demon);});
+        document.getElementById('boutonVomir').addEventListener('click', function(){rendreCoup(nain,demon);});
+        document.getElementById('boutonManger').addEventListener('click', function(){rendreCoup(nain,demon);});
     }
 });
 
