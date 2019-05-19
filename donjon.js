@@ -360,5 +360,6 @@ choixEnnemie.addEventListener('change', function(){
     }
 });
 
+
 console.log(window.getComputedStyle(document.getElementById('container')).top);
 
