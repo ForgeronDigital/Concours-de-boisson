@@ -229,6 +229,15 @@ document.getElementById('boutonBoire').addEventListener('click',function boire()
     else if(nain.santé<33){
         document.getElementById('im3').style.display="none";
     }
+    if (nain.alcool<0.75){
+        document.getElementById('im4').style.display="initial";
+    }
+    else if (nain.alcool<1.25){
+        document.getElementById('im5').style.display="initial";
+    }
+    else if (nain.alcool<1.75){
+        document.getElementById('im6').style.display="initial";
+    }
     if(nain.alcool>=1.5){
         if(nain.santé>10){
             nain.santé-=10;
@@ -246,15 +255,6 @@ document.getElementById('boutonBoire').addEventListener('click',function boire()
         document.getElementById('alcool').innerHTML="Gramme par litre: " + nain.alcool;
         nain.degat+=5;
         document.getElementById('degat').innerHTML="Force de frappe: "+nain.degat;
-        if (nain.alcool<0.75){
-            document.getElementById('im4').style.display="initial";
-        }
-        else if (nain.alcool<1.25){
-            document.getElementById('im5').style.display="initial";
-        }
-        else if (nain.alcool<1.75){
-            document.getElementById('im6').style.display="initial";
-        }
     }});
 
 document.getElementById('boutonVomir').addEventListener('click', function vomir(){
