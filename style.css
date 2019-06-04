@@ -147,7 +147,11 @@
     height: 100%;
     padding:0 5px;
 }
-.personnage__info__image, .personnage__info__image__ennemi{
-    height: 40%;
+.personnage__info__image{
+    height: 30%;
+    width: auto;
+}
+.personnage__info__image__ennemi{
+    height: 50%;
     width: auto;
 }

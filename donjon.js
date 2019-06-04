@@ -113,17 +113,33 @@ function trembler(){
         }
     }
 }
+
 function attaquer(ennemie,perso)
-{   bandeSon('perso.wav');
+{   
+    var vie;
+    if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="humain"){vie=100;}
+        else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="elf"){vie=130;}
+        else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="orc"){vie=200;}
+        else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="demon"){vie=300;}
+    console.log(ennemie.santé);
+    bandeSon('perso.wav');
     setTimeout(attendre,3000);
     document.getElementById('sante').innerHTML="Santé: "+perso.santé;
     if(ennemie.santé>perso.degat){
     ennemie.santé-=perso.degat;
     document.getElementById('santeEnnemie').innerHTML='Santé: '+ennemie.santé;
+    if(ennemie.santé>(vie * 0.66)){
+        document.getElementById('ime2').style.display="none";
+    }
+    else if(ennemie.santé>(vie * 0.33)){
+        document.getElementById('ime3').style.display="none";
+    }
+
     }
     else if(ennemie.santé<=perso.degat){
         ennemie.santé=0;
         document.getElementById('santeEnnemie').innerHTML="Santé: 0";
+        document.getElementById('ime1').style.display="none";
         if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="humain"){document.getElementById('imageEnnemie').setAttribute('src','image/alcooliqueVictoire.jpg');}
         else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="elf"){document.getElementById('imageEnnemie').setAttribute('src','image/elf.jpg');}
         else if(choixEnnemie.options[choixEnnemie.options.selectedIndex].value=="orc"){document.getElementById('imageEnnemie').setAttribute('src','image/orc.jpg');}
