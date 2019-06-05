@@ -128,11 +128,11 @@ function attaquer(ennemie,perso)
     if(ennemie.santé>perso.degat){
     ennemie.santé-=perso.degat;
     document.getElementById('santeEnnemie').innerHTML='Santé: '+ennemie.santé;
-    if(ennemie.santé>(vie * 0.66)){
-        document.getElementById('ime2').style.display="none";
-    }
-    else if(ennemie.santé>(vie * 0.33)){
+    if(ennemie.santé<(vie * 0.66)){
         document.getElementById('ime3').style.display="none";
+    }
+    if(ennemie.santé<(vie * 0.33)){
+        document.getElementById('ime2').style.display="none";
     }
 
     }
